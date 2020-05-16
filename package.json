@@ -15,9 +15,12 @@
   },
   "dependencies": {
     "body-parser": "^1.18.3",
+    "connect-mongodb-session": "^2.3.1",
+    "dotenv": "^8.2.0",
     "ejs": "^2.6.1",
     "express": "^4.17.1",
     "express-handlebars": "^3.0.0",
+    "express-session": "^1.17.1",
     "mongodb": "^3.5.7",
     "mysql2": "^1.6.1",
     "pug": "^2.0.3",
