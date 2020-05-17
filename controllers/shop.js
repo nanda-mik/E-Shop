@@ -39,6 +39,7 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
+  console.log(req.user);
   Product.fetchAll()
     .then(products => {
       res.render('shop/index', {

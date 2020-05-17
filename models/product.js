@@ -33,7 +33,7 @@ class Product{
     const db = getDb();
     return db.collection('products').find().toArray()
     .then(products => {
-      console.log(products);
+      // console.log(products);
       return products;
     })
     .catch(err => {

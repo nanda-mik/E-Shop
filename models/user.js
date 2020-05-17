@@ -2,9 +2,9 @@ const mongodb = require('mongodb');
 const getDb = require('../util/database').getDb;
 
 class User{
-  constructor(username, email,cart,id){
-    this.name = username;
+  constructor(email,password,cart,id){
     this.email= email;
+    this.password= password;
     this.cart= cart;
     this._id = id;
   }
@@ -102,7 +102,7 @@ class User{
     const db = getDb();
     return db.collection('users').findOne({_id: new mongodb.ObjectId(userId)})
     .then(user => {
-      console.log(user);
+      // console.log(user);
       return user;
     })
     .catch(err => console.log(err));
