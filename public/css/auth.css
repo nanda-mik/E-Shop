@@ -5,3 +5,57 @@
     display: block;
   }
   
+.login-link {
+    display: block;
+    font-size: 13px;
+    text-align: right;
+}
+
+.register-link {
+  display: block;
+  font-size: 17px;
+  text-align: center;
+}
+
+.link, a {
+    color: #489be8;
+    text-decoration: none;
+    transition: color .3s;
+}
+
+/* for all buttons in auth pages */
+.login-btn {
+  margin: 30px 0;
+  text-align: center;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1188e6;
+  border-color: #1288e5;
+}
+
+.btn {
+  position: relative;
+  display: inline-block;
+  padding: 11px 30px;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  border-style: solid;
+  border-radius: 3px;
+  border-width: 1px;
+  box-sizing: border-box;
+  transition: color .3s,background-color .3s,border-color .3s;
+  user-select: none;
+}
+
+.user-message{
+  background-color: #eec9c9;
+  color: rgb(207, 38, 38);
+  border-radius: 5px;
+  border-color: #e9b3b3 ;
+}

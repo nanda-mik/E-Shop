@@ -8,7 +8,7 @@
 
     <main>
         <% if(errorMessage) { %>
-            <div><%= errorMessage %></div>
+            <div class="user-message user-message--error"><%= errorMessage %></div>
         <% } %>
         <form class="login-form" action="/login" method="POST">
             <div class="form-control">
@@ -19,8 +19,19 @@
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password">
             </div>
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <button class="btn" type="submit">Login</button>
+            <div class="col-10">
+                <a class="login-link" href="/reset">Forgot your password?</a>
+            </div>
+            <div class="login-btn">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button class="btn btn-primary" type="submit">Log In</button>
+            </div>
+            <div class="centered">
+                <p className="grey-text text-darken-1">Don't have an account?
+                    <a class="register-link" href="/signup">Register</a>
+                </p>
+            </div>
         </form>
+        
     </main>
 <%- include('../includes/end.ejs') %>

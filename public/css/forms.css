@@ -14,10 +14,10 @@
 .form-control textarea {
   border: 1px solid #a1a1a1;
   font: inherit;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
 .form-control input:focus,
 .form-control textarea:focus {
-  outline-color: #00695c;
+  outline-color:  #1288e5;
 }

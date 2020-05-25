@@ -1,4 +1,6 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+@import url('https://fonts.googleapis.com/css?family=ABeeZee');
+
+
 
 * {
   box-sizing: border-box;
@@ -7,7 +9,8 @@
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'ABeeZee';
+  font-size: large;
 }
 
 main {
@@ -34,7 +37,7 @@ form {
 .main-header {
   width: 100%;
   height: 3.5rem;
-  background-color: #00695c;
+  background-color: #1188e6;
   padding: 0 1.5rem;
   display: flex;
   align-items: center;
@@ -117,7 +120,7 @@ form {
 .mobile-nav__item a:active,
 .mobile-nav__item a:hover,
 .mobile-nav__item a.active {
-  background: #00695c;
+  background-color: #1188e6;
   color: white;
   border-radius: 3px;
 }
@@ -208,7 +211,7 @@ form {
 
 .btn:hover,
 .btn:active {
-  background-color: #00695c;
+  background-color: #073457;
   color: white;
 }
 
@@ -223,6 +226,22 @@ form {
   color: white;
 }
 
+.user-message {
+  margin: auto;
+  width: 90%;
+  border: 1px solid #4771fa;
+  padding: 0.5rem;
+  border-radius: 3px;
+  background: #b9c9ff;
+  text-align: center;
+}
+
+.user-message--error {
+  border-color: red;
+  background: rgb(255, 176, 176);
+  color:black;
+}
+
 @media (min-width: 768px) {
   .main-header__nav {
     display: flex;
@@ -230,5 +249,9 @@ form {
 
   #side-menu-toggle {
     display: none;
+  }
+
+  .user-message{
+    width: 30rem;
   }
 }
