@@ -43,10 +43,12 @@ exports.postLogin = (req,res,next) => {
 
   if (Validator.isEmpty(req.body.email)) {
     req.flash('error', 'Email field is required');
+    return res.redirect('/login');
   }
 
   if (Validator.isEmpty(req.body.password)) {
     req.flash('error', 'Password field is required');
+    return res.redirect('/login');
   }
 
   db.collection('users').findOne({email: email})
@@ -73,7 +75,12 @@ exports.postLogin = (req,res,next) => {
         res.redirect('/login');
       })
     })
-    .catch(err=>console.log(err));
+    .catch(err=>{
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+
+    });
 };
 
 exports.postLogout = (req,res,next) => {
@@ -109,16 +116,17 @@ exports.postSignup = (req, res, next) => {
 
   if (Validator.isEmpty(req.body.email)) {
     req.flash('error', 'Email field is required');
-  }
-
-  if (Validator.isEmpty(req.body.password)) {
+    return res.redirect('/signup');
+  }else if(!Validator.isEmail(req.body.email)){
+    req.flash('error', 'Invalid Email address');
+    return res.redirect('/signup');
+  }else if (Validator.isEmpty(req.body.password)) {
     req.flash('error', 'Password field is required');
-  }
-
-  if (Validator.isEmpty(req.body.confirmPassword)) {
+    return res.redirect('/signup');
+  }else if (Validator.isEmpty(req.body.confirmPassword)) {
     req.flash('error', 'confirm Password field is required');
-  }
-
+    return res.redirect('/signup');
+  }else{
 
   db.collection('users').findOne({email: email})
   .then(userDoc => {
@@ -146,9 +154,19 @@ exports.postSignup = (req, res, next) => {
         html: '<h1>You successfully signed up!</h1><p>Hope, you enjoy shopping with us.</p>'
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+
+    });
   })
-  .catch(err=>console.log(err));
+  .catch(err=>{
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  });
+}
 };
 
 exports.getReset = (req, res, next) => {
@@ -212,7 +230,10 @@ exports.postReset = (req, res, next) => {
         });
       })
       .catch(err => {
-        console.log(err);
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);
+  
       });
   });
 };
@@ -238,7 +259,10 @@ exports.getNewPassword = (req, res, next) => {
       });
     })
     .catch(err => {
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+
     });
 };
 
@@ -272,6 +296,9 @@ exports.postNewPassword = (req, res, next) => {
       res.redirect('/login');
     })
     .catch(err => {
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+
     });
 };

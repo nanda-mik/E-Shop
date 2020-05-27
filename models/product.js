@@ -42,6 +42,14 @@ class Product{
     //find doesn't return a promise it return a cursor,
     //an object provided by mongodb which allows us to go through our elements, our documents step by step.
   }
+  static findProduct(id){
+    const db = getDb();
+    return db.collection('products').find({userId : id}).toArray()
+    .then(products => {
+      return products;
+    })
+    .catch(err => console.log(err));
+  }
 
   static findById(prodId){
     const db = getDb();
@@ -56,9 +64,9 @@ class Product{
       console.log(err);
     });
   }
-  static deleteById(prodId){
+  static deleteById(prodId, id){
     const db = getDb();
-    return db.collection('products').deleteOne({_id: new mongodb.ObjectId(prodId)})
+    return db.collection('products').deleteOne({_id: new mongodb.ObjectId(prodId), userId : id})
     .then(result => {
       console.log('Deleted');
     })

@@ -27,7 +27,9 @@ exports.postAddProduct = (req, res, next) => {
     res.redirect('/admin/products');
   })
   .catch(err => {
-    console.log(err);
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
   });
 };
 
@@ -51,7 +53,12 @@ exports.getEditProduct = (req, res, next) => {
         isAuthenticated: req.session.isLoggedIn
       });
     })
-    .catch(err => console.log(err));
+    .catch(err =>{
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+
+    });
 };
 
 exports.postEditProduct = (req, res, next) => {
@@ -66,11 +73,17 @@ exports.postEditProduct = (req, res, next) => {
     console.log('UPDATED PRODUCT!');
     res.redirect('/admin/products');
   })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+
+    });
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.fetchAll()
+  const id = req.user._id;
+  Product.findProduct(id)
     .then(products => {
       res.render('admin/products', {
         prods: products,
@@ -79,15 +92,26 @@ exports.getProducts = (req, res, next) => {
         isAuthenticated: req.session.isLoggedIn
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+
+    });
 };
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.deleteById(prodId)
+  const id = req.user._id;
+  Product.deleteById(prodId,id)
     .then(() => {
       console.log('DESTROYED PRODUCT');
       res.redirect('/admin/products');
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+
+    });
 };
