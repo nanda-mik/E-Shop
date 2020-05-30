@@ -5,15 +5,32 @@ exports.getAddProduct = (req, res, next) => {
     pageTitle: 'Add Product',
     path: '/admin/add-product',
     editing: false,
+    errorMessage: null,
     isAuthenticated: req.session.isLoggedIn
   });
 };
 
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
-  const imageUrl = req.body.imageUrl;
+  const image = req.file;
   const price = req.body.price;
   const description = req.body.description;
+  console.log(image);
+  if(!image){
+    return res.status(422).render('admin/edit-product', {
+      pageTitle: 'Add Product',
+      path: '/admin/add-product',
+      editing: false,
+      product: {
+        title: title,
+        price: price,
+        description: description
+      },
+      errorMessage: 'Attached file is not an image.'
+    });
+  }
+
+  const imageUrl = image.path;
   const product = new Product(title,
     price,
     description,
@@ -50,6 +67,7 @@ exports.getEditProduct = (req, res, next) => {
         path: '/admin/edit-product',
         editing: editMode,
         product: product,
+        errorMessage:null,
         isAuthenticated: req.session.isLoggedIn
       });
     })
@@ -65,15 +83,22 @@ exports.postEditProduct = (req, res, next) => {
   const prodId = req.body.productId;
   const updatedTitle = req.body.title;
   const updatedPrice = req.body.price;
-  const updatedImageUrl = req.body.imageUrl;
+  const image = req.file;
   const updatedDesc = req.body.description;
-  const product = new Product(updatedTitle,updatedPrice,updatedDesc,updatedImageUrl,prodId);
-  product.save()  
+  Product.findById(prodId)
+  .then(prod => {
+    var imageUrl = prod.imageUrl;
+    if(image){
+      imageUrl = image.path;
+    }
+    const product = new Product(updatedTitle,updatedPrice,updatedDesc,imageUrl,prodId,req.user._id);
+    return product.save();
+  })
   .then(result => {
     console.log('UPDATED PRODUCT!');
     res.redirect('/admin/products');
   })
-    .catch(err => {
+  .catch(err => {
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
