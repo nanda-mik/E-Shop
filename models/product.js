@@ -1,6 +1,8 @@
 const mongodb = require('mongodb');
 const getDb = require('../util/database').getDb;
 
+const item_per_page = 2;
+
 class Product{
   constructor(title, price, description, imageUrl, id, userId){
     this.title = title;
@@ -29,9 +31,12 @@ class Product{
     });
   }
 
-  static fetchAll(){
+  static fetchAll(page){
     const db = getDb();
-    return db.collection('products').find().toArray()
+    return db.collection('products').find()
+    .skip((page - 1) * item_per_page)
+    .limit(item_per_page)
+    .toArray()
     .then(products => {
       // console.log(products);
       return products;

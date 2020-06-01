@@ -242,6 +242,35 @@ form {
   color:black;
 }
 
+
+
+.pagination a:hover {
+  background-color: #ddd;
+  border-radius: 5px;
+}
+
+.pagination {
+  margin-top: 5rem;
+  text-align: center;
+  display: inline-block;
+  margin-left: 45%;
+}
+
+.pagination a {
+  text-decoration: none;
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+.pagination a:active,
+.pagination a.active {
+  background: #00695c;
+  color: white;
+  border-radius: 5px;
+}
+
 @media (min-width: 768px) {
   .main-header__nav {
     display: flex;

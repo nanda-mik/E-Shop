@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const fileHelper = require('../util/file');
 
 exports.getAddProduct = (req, res, next) => {
   res.render('admin/edit-product', {
@@ -89,6 +90,7 @@ exports.postEditProduct = (req, res, next) => {
   .then(prod => {
     var imageUrl = prod.imageUrl;
     if(image){
+      fileHelper.deleteFile(imageUrl);
       imageUrl = image.path;
     }
     const product = new Product(updatedTitle,updatedPrice,updatedDesc,imageUrl,prodId,req.user._id);
@@ -125,18 +127,23 @@ exports.getProducts = (req, res, next) => {
     });
 };
 
-exports.postDeleteProduct = (req, res, next) => {
-  const prodId = req.body.productId;
+exports.deleteProduct = (req, res, next) => {
+  const prodId = req.params.productId;
   const id = req.user._id;
-  Product.deleteById(prodId,id)
+  Product.findById(prodId)
+  .then(prod => {
+    if(!prod){
+      return next(new Error('Product not found.'));
+    }
+    fileHelper.deleteFile(prod.imageUrl);
+    return Product.deleteById(prodId,id);
+  })
     .then(() => {
       console.log('DESTROYED PRODUCT');
-      res.redirect('/admin/products');
+      res.status(200).json({message: 'Success!'});
     })
     .catch(err => {
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
+      res.status(500).json({message: 'Deleting product failed.'});
 
     });
 };
