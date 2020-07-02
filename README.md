@@ -13,7 +13,7 @@
   Some basic Git commands are:
 
 ```
-$ git clone https://github.com/mohamedsamara/mern-ecommerce.git
+$ git clone https://github.com/nanda-mik/E-Shop.git
 $ cd project
 $ npm install
 
