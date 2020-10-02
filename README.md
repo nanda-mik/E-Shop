@@ -47,6 +47,7 @@ $ npm start
 
 - [Stripe](https://stripe.com/docs)
 
+- [pdfKit](https://pdfkit.org/)
+
 - [Sendgrid](https://sendgrid.com/docs/)
 
-- [pdfKit](https://pdfkit.org/)
